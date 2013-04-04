@@ -1,0 +1,14 @@
+/target
+/lib
+/classes
+/checkouts
+pom.xml
+*.jar
+*.class
+*.sublime*
+.lein-deps-sum
+.lein-failures
+.lein-plugins
+.DS_Store
+test/guardian_digester/example.json
+
