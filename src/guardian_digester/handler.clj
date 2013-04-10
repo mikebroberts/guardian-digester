@@ -15,7 +15,7 @@
 	(:data (swap! cache foo f timeout)))
 
 (defroutes app-routes
-	(GET "/" [] (lookup query-guardian-and-render 10000))
+	(GET "/" [] (lookup query-guardian-and-render 300000)) ; five minutes
 	(route/not-found "Not Found"))
 
 (def app
