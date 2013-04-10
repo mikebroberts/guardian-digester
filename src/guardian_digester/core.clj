@@ -49,4 +49,5 @@
 ; ** 
 
 (defn query-guardian-and-render []
+	(println "query-guardian-and-render")
 	(-> (urls) (query-all) (render)))

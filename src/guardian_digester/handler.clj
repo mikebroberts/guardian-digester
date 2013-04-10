@@ -3,8 +3,19 @@
 	(:require [compojure.handler :as handler]
             [compojure.route :as route]))
 
+(def cache (atom {:data "" :time 0}))
+
+(defn foo [m f timeout]
+	(let [now (System/currentTimeMillis)]
+		(if (< (+ (:time m) timeout) now)
+			{:time now :data (f)}
+			m)))
+
+(defn lookup [f timeout]
+	(:data (swap! cache foo f timeout)))
+
 (defroutes app-routes
-	(GET "/" [] (query-guardian-and-render))
+	(GET "/" [] (lookup query-guardian-and-render 10000))
 	(route/not-found "Not Found"))
 
 (def app
