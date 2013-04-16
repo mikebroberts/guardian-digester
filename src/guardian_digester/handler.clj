@@ -1,21 +1,13 @@
 (ns guardian-digester.handler
 	(:use compojure.core [guardian-digester.core :only (query-guardian-and-render)])
 	(:require [compojure.handler :as handler]
-            [compojure.route :as route]))
+            [compojure.route :as route]
+            [noir.util.cache :as cache]))
 
-(def cache (atom {:data "" :time 0}))
-
-(defn foo [m f timeout]
-	(let [now (System/currentTimeMillis)]
-		(if (< (+ (:time m) timeout) now)
-			{:time now :data (f)}
-			m)))
-
-(defn lookup [f timeout]
-	(:data (swap! cache foo f timeout)))
+(cache/set-timeout! 300) ; 5 minute cache
 
 (defroutes app-routes
-	(GET "/" [] (lookup query-guardian-and-render 300000)) ; five minutes
+	(GET "/" [] (cache/cache! :home (query-guardian-and-render)))
 	(route/not-found "Not Found"))
 
 (def app

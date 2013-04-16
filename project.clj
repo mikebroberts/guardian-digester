@@ -8,7 +8,8 @@
 	  	[clj-http "0.7.0"]
   		[hiccup "1.0.3"]
   		[org.clojure/data.json "0.2.1"]
-  		[compojure "1.1.5"]]
+  		[compojure "1.1.5"]
+  		[lib-noir "0.5.0"]]
 	:plugins [[lein-ring "0.8.2"]]
 	:ring {:handler guardian-digester.handler/app}
 	:profiles {:dev {:dependencies [[ring-mock "0.1.3"]]}}
